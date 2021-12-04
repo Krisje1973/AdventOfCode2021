@@ -5,10 +5,10 @@ from  AOCHelper import *
 input = []
 def readinput():
    global input
-   input = readinput_lines("Day3\input.txt")
-  
+   input = readinput_lines("Day3\input_ex.txt")
+
 def main():
-   readinput()
+   readinput()   
    first_star()
    second_star()        
 

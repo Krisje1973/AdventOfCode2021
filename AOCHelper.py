@@ -13,6 +13,10 @@ def readinput_lines(filename):
     file = open(filename, "r")    
     return [line.strip() for line in file]
 
+def readinput_lines_skip_enters(filename):   
+    file = open(filename, "r")    
+    return [line.strip() for line in file if line.strip() != '']
+
 def readinput_lines_as_ints(filename):   
     file = open(filename, "r")    
     input=[]
