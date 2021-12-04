@@ -55,9 +55,8 @@ def findbingo(boards,first):
                if n==num:
                   b.remove(n)
             if sum(b) == 0:              
-               result = sum(x or 0 for row in board for x in row if x != num) / 2 * num
                if first or len(check) == 1:
-                  return result
+                  return int(sum(x or 0 for row in board for x in row if x != num) / 2 * num)
                check = removekeyfromdict(check, boardkey)
 
 if __name__ == '__main__':
