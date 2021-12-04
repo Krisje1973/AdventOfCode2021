@@ -7,7 +7,7 @@ def readinput():
    global input
    global nums
    global boardsinput
-   input = readinput_lines_skip_enters("Day4\input_ex.txt")
+   input = readinput_lines_skip_enters("Day4\input.txt")
    
    nums = list(map(int, input[0].split(",")))
    boardsinput = input[1:]
@@ -35,9 +35,16 @@ def first_star():
 
    print("Result First Star")
    print(findbingo(boards))
+
 def findbingo(boards):
-   for num in nums:
-      for board in boards.values():
+   cnt = 0
+   last = False
+   check = boards
+   for num in nums:      
+      for boardkey in boards.keys():
+         board = boards[boardkey]
+         if not boardkey in check.keys():
+            continue
          for b in board:
             for n in b:
                if n==num:
@@ -46,9 +53,14 @@ def findbingo(boards):
                tot = {}
                for x in board:
                   for y in x:
-                     tot[y] = y
-               result = sum(tot.values()) - num
-               return (result * int(num))
+                     if y != num:
+                        tot[y] = y
+               som = sum(tot.values())
+               result = (sum(tot.values())) * int(num)
+               if len(check) == 1:
+                  return result
+               check = removekeyfromdict(check, boardkey)
+
                
 def second_star():
 

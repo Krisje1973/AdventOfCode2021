@@ -24,6 +24,12 @@ def readinput_lines_as_ints(filename):
       input.append(int(line)) 
     return input
 
+def removekeyfromdict(d, key):
+   r = dict(d)
+   if key in d.keys():
+      del r[key]
+   
+   return r  
 """ A Python Class
 A simple Python graph class, demonstrating the essential 
 facts and functionalities of graphs.
