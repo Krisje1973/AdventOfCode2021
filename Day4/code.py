@@ -18,6 +18,14 @@ def main():
    second_star()        
 
 def first_star():
+   print("Result First Star")
+   print(findbingo(setboards(),True))
+
+def second_star():
+   print("Result Second Star")
+   print(findbingo(setboards(),False))
+
+def setboards():
    boards = {}
    cnt=0
    bo=1
@@ -33,12 +41,9 @@ def first_star():
          boards[bo] += list(map(list, zip(*boards[bo])))       
          bo+=1
 
-   print("Result First Star")
-   print(findbingo(boards))
+   return boards
 
-def findbingo(boards):
-   cnt = 0
-   last = False
+def findbingo(boards,first):
    check = boards
    for num in nums:      
       for boardkey in boards.keys():
@@ -57,15 +62,9 @@ def findbingo(boards):
                         tot[y] = y
                som = sum(tot.values())
                result = (sum(tot.values())) * int(num)
-               if len(check) == 1:
+               if first or len(check) == 1:
                   return result
                check = removekeyfromdict(check, boardkey)
-
-               
-def second_star():
-
-   print("Result Second Star")
- 
 
 if __name__ == '__main__':
     main()
