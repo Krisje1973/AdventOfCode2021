@@ -6,7 +6,7 @@ input = []
 def readinput():
    global input
    global cords
-   input = readinput_lines("Day5\input.txt")
+   input = readinput_lines("Day5\input_ex.txt")
    cords = []
    for line in input:
       l, r = line.split(" -> ")
@@ -14,8 +14,9 @@ def readinput():
    
 def main():
    readinput()
-   #first_star()
-   second_star()        
+   first_star()
+   second_star()   
+  
 
 def first_star():
    m = max(max(cords[0],cords[1],cords[2],cords[3]))
@@ -26,18 +27,15 @@ def first_star():
          for x in range(min(x1, x2), max(x1, x2) + 1):
             for y in range(min(y1, y2), max(y1, y2) + 1):
                grid[(x, y)] = grid.get((x, y), 0) + 1
-   t = 0
-   for v in grid.values():
-      if v > 1:
-         t += 1
+
+   tot = len([key for (key, value) in grid.items() if value > 1])
   
    print("Result First Star")
-   print(t)
+   print(tot)
 
 def second_star():
   
    grid = {}
-   cords2 = [[9,7,7,9]]
    for c in cords:
       x1,y1,x2,y2 = map(int,c)
       if x1 == x2 or y1 ==y2:
@@ -45,8 +43,7 @@ def second_star():
             for y in range(min(y1, y2), max(y1, y2) + 1):
                grid[(x, y)] = grid.get((x, y), 0) + 1
       else:
-         xg = []
-         yg= []
+         xg,yg = [],[]
          step = 1 if x2-x1 >= 0 else -1
          x2 += step
          for x in range(x1,x2,step):
@@ -59,12 +56,10 @@ def second_star():
          for xy in list(zip(xg,yg)):           
             grid[xy] = grid.get(xy, 0) + 1
 
-   t = 0
-   for v in grid.values():
-      if v > 1:
-         t += 1
+   tot = len([key for (key, value) in grid.items() if value > 1])
   
    print("Result Second Star")
-   print(t)
+   print(tot)
+
 if __name__ == '__main__':
     main()
