@@ -24,6 +24,13 @@ def readinput_lines_as_ints(filename):
       input.append(int(line)) 
     return input
 
+def readinput_lines_as_ints(filename,seperator):   
+    file = open(filename, "r")    
+    input=[]
+    for line in [line.strip(seperator) for line in file]:
+      input.append(int(line)) 
+    return input
+    
 def removekeyfromdict(d, key):
    r = dict(d)
    if key in d.keys():
