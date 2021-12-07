@@ -27,9 +27,7 @@ def first_star():
 
 def second_star():
    ho,ve,aim=0,0,0
-   for t in input:
-      
-      op,q=t.split()
+   for op,q in [x.split() for x in input]:
       q=int(q)
     
       if op == "forward":

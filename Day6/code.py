@@ -16,7 +16,7 @@ def main():
 def first_star():
    
    fishes = dict(Counter(input))
-   for i in range(256):
+   for i in range(80):
       repro = defaultdict(int)
       for key, val in fishes.items():
          if key == 0:

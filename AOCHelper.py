@@ -9,6 +9,14 @@ def readinput_dict_as_ints(filename):
       input[int(line)] = int(line)
     return input
 
+def readinput_dict_as_ints_with_separator(filename,separator):    
+    input = {}
+    file = open(filename, "r")
+    for line in [x.split(separator) for x in file]:
+        for val in line:
+            input[int(val)] = int(val)
+    return input
+
 def readinput_lines(filename):   
     file = open(filename, "r")    
     return [line.strip() for line in file]
@@ -24,11 +32,12 @@ def readinput_lines_as_ints(filename):
       input.append(int(line)) 
     return input
 
-def readinput_lines_as_ints(filename,seperator):   
+def readinput_lines_as_ints_with_separator(filename,separator):   
     file = open(filename, "r")    
     input=[]
-    for line in [line.strip(seperator) for line in file]:
-      input.append(int(line)) 
+    for line in [line.split(separator) for line in file]:
+        for val in line:
+            input.append(int(val)) 
     return input
     
 def removekeyfromdict(d, key):
