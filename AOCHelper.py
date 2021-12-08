@@ -17,9 +17,18 @@ def readinput_dict_as_ints_with_separator(filename,separator):
             input[int(val)] = int(val)
     return input
 
+def readinput_lines_with_separator(filename,separator):   
+    file = open(filename, "r")    
+    input=[]
+    for line in [line.split(separator) for line in file]:
+        for val in line:
+            input.append(val.strip()) 
+    return input
+
 def readinput_lines(filename):   
     file = open(filename, "r")    
     return [line.strip() for line in file]
+
 
 def readinput_lines_skip_enters(filename):   
     file = open(filename, "r")    
