@@ -18,7 +18,7 @@ def readinput():
       digs.append(d.strip())
 def main():
    readinput()
-   #first_star()
+   first_star()
    second_star()        
 
 def first_star():
