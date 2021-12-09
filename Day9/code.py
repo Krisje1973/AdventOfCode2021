@@ -11,20 +11,20 @@ def readinput():
    input = readinput_lines_skip_enters("Day9\input.txt")
    nums = list(map(int, input))
    nums = input
-   maxx=len(str(nums[0]))-1
-   maxy=len(nums)-1
+   maxx=len(str(nums[0]))
+   maxy=len(nums)
 def main():
    readinput()
-   #first_star()
-   second_star()        
+   first_star()
+   #second_star()        
    #1315672 = to low
 def first_star():
    lows = []
-   for x in range(maxx+1):
-      for y in range(maxy+1):
-         ne = [int(str(nums[y])[x-1]) if x>0 else 9,int(str(nums[y])[x+1])if x<maxx else 9,int(str(nums[y-1])[x]) if y>0 else 9,int(str(nums[y+1])[x]) if y<maxy else 9]        
-         if int(str(nums[y])[x]) < min(ne):
-            lows.append(int(str(nums[y])[x])+1)
+   for x in range(maxx):
+      for y in range(maxy):
+         cur = int(str(nums[y])[x])
+         if all([num > cur for num in get_adjacent_nums(x,y)]):
+            lows.append(cur+1)
 
    print("Result First Star")
    print(sum(lows))
@@ -37,6 +37,8 @@ def second_star():
          if int(str(nums[y])[x]) < min(ne):
             bas = defaultdict(int)
             basv = defaultdict(int)
+            print(x,y)
+            print(list(get_adjacent(x,y)))
             bas[(x,y)] = 1
            
             for x,y in navigate(x,y,-1,0):  
@@ -60,11 +62,21 @@ def second_star():
                   bas[(k,v)] = 1
 
             bassins.append(sum(bas.values()))
-
+   print(max(bassins))
    bassins.sort(reverse=True)
-   bassins[0] = bassins[0] + 1
+   #bassins[0] = bassins[0] + 1
    print("Result Second Star")
    print(bassins[0]*bassins[1]*bassins[2])
+
+def get_adjacent_nums(x, y):
+    for nx, ny in (x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1):
+        if 0 <= nx < maxx and 0 <= ny < maxy:
+            yield int(str(nums[ny])[nx])
+
+def get_adjacent(x, y):
+    for nx, ny in (x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1):
+        if 0 <= nx < maxy and 0 <= ny < maxx:
+            yield (nx, ny)
 
 def navigate(x,y,x1,y1):
   
