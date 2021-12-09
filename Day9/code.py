@@ -6,21 +6,27 @@ input = []
 def readinput():
    global input
    global nums
-   global boardsinput
-   input = readinput_lines_skip_enters("Day4\input.txt")
-   
-   nums = list(map(int, input[0].split(",")))
-   boardsinput = input[1:]
-   
+   input = readinput_lines_skip_enters("Day9\input.txt")
+   nums = list(map(int, input))
+   nums = input
 def main():
    readinput()
    first_star()
    second_star()        
 
 def first_star():
-   print("Result First Star")
- 
+   maxx=len(str(nums[0]))-1
+   maxy=len(nums)-1
+   lows = []
+   for x in range(maxx+1):
+      for y in range(maxy+1):
+         ne = [int(str(nums[y])[x-1]) if x>0 else 9,int(str(nums[y])[x+1])if x<maxx else 9,int(str(nums[y-1])[x]) if y>0 else 9,int(str(nums[y+1])[x]) if y<maxy else 9]        
+         if int(str(nums[y])[x]) < min(ne):
+            lows.append(int(str(nums[y])[x])+1)
 
+   print("Result First Star")
+   print(sum(lows))
+   
 def second_star():
    print("Result Second Star")
   
