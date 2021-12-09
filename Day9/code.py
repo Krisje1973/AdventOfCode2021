@@ -61,12 +61,10 @@ def second_star():
 
             bassins.append(sum(bas.values()))
 
-   bassins.sort()
-   tot = 1
-   for bas in bassins[len(bassins)-3:]:
-      tot *=  bas
+   bassins.sort(reverse=True)
+   bassins[0] = bassins[0] + 1
    print("Result Second Star")
-   print(bassins)
+   print(bassins[0]*bassins[1]*bassins[2])
 
 def navigate(x,y,x1,y1):
   
