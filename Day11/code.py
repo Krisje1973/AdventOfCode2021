@@ -26,7 +26,8 @@ def main():
 def first_star():
    gh = GridHelper()
    cnt = 0
-   for _ in range(100):
+   while True:
+      cnt+=1
     
       for r in octo:
          for c in range(maxy):      
@@ -46,9 +47,12 @@ def first_star():
          flash = list([(r,c) for c in range(maxx) for r in range(maxy) if octo[r][c]>9])
          if len(flash)== 0 : break
 
-      cnt += len(flashed)
+      #cnt += len(flashed)
       for r,c in flashed:
          octo[r][c] = 0  
+      
+      if len(flashed) == 100: 
+         break
        
    print("Result First Star")
    print(cnt)
