@@ -13,6 +13,7 @@ def readinput():
    nums = input
    maxx=len(str(nums[0]))
    maxy=len(nums)
+
 def main():
    readinput()
    first_star()

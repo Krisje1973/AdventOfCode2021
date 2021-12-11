@@ -390,10 +390,30 @@ class Compass:
     return (dirs[idx:] + dirs[:idx])[0]     
 
 class GridHelper:
+  def get_adjacent(self,input):
+    maxx = len(str(input[0]))
+    maxy = len(input)
+    for line in input:  
+        for y,x in enumerate(line):
+            x= int(x)
+            y=int(y)
+            xy = defaultdict(list)
+            for nx, ny in (x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1):
+                if 0 <= nx < maxy and 0 <= ny < maxx:
+                    xy[(x,y)] += [(nx,ny), input[nx][ny]]
+            if len(xy) > 0: yield xy
+
+  def get_adjacent_pos_with_diag(self,x, y,maxx,maxy):
+    adj = []
+    for nx, ny in (x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1) , (x-1,y-1), (x+1,y+1),(x-1,y+1), (x+1,y-1):
+        if 0 <= nx < maxy and 0 <= ny < maxx:
+           adj.append((nx, ny))
+    return adj
   def get_adjacent_pos(x, y,maxx,maxy):
      for nx, ny in (x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1):
         if 0 <= nx < maxy and 0 <= ny < maxx:
             yield (nx, ny)
+
 
   def get_suroundings(self,grid,x,y,count):
     start =-1
@@ -447,7 +467,7 @@ class GridHelper:
       combi_vals[offset] = combi_val      
          
     return combis,combi_vals
-    
+
 class ChineseReminder():
   def calculate_chinese_remainder(self,rem, mod):
     #
