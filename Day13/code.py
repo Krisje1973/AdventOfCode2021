@@ -32,7 +32,7 @@ def readinput():
       grid[int(dot[1])][int(dot[0])] = 1
 def main():
    readinput()
-   first_star()
+   #first_star()
    second_star()        
 
 def first_star():
@@ -63,7 +63,24 @@ def first_star():
    print(tot)   
 
 def second_star():
+   global grid
+   for xy,v in folds:
+      v=int(v)
+      v2= v*2
+      if xy.strip() == 'y':
+         for y in range(v):
+            for idx,x in enumerate(grid[y]):
+               grid[y][idx] = int(grid[y][idx]) | int(grid[v2-y][idx])
+         grid = grid[0:v+1]
+             
+      if xy.strip() == 'x':
+         for y in grid:
+            for idx in range(v):
+               y[idx] = int(y[idx]) | int(y[v2-idx])
+               y.pop(-1)
+
    print("Result Second Star")
-  
+   for row in grid:
+      print("".join(" #"[col] for col in row))
 if __name__ == '__main__':
     main()
