@@ -7,7 +7,7 @@ paths = defaultdict(list)
 def readinput():
    global input
    global paths
-   input = readinput_lines("Day12\input.txt")
+   input = readinput_lines("Day12\input_ex.txt")
    
    for inp in list([a for a in [line.split('-') for line in input]]):
       paths[inp[0]].append(inp[1])
@@ -15,7 +15,7 @@ def readinput():
 
 def main():
    readinput()
-   #first_star()
+   first_star()
    second_star()        
 
 def first_star():
@@ -25,12 +25,8 @@ def first_star():
 def checkpath(cur,seen):
    if cur == 'end': 
       return 1
-   
-   total = 0
-   for path in [p  for p in paths[cur] if p not in seen]:
-      total += checkpath(path, seen | {path.lower()})
-  
-   return total
+
+   return sum(checkpath(path, seen | {path.lower()}) for path  in [p  for p in paths[cur] if p not in seen])
 
 def checkpath2(cur,seen,double):
    if cur == "end":
