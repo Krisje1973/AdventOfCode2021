@@ -38,6 +38,7 @@ def main():
 def first_star():
    global grid
    #102 TO Low
+   #Zucht, het was ENKEL 1 fold :( grrr :P
    for xy,v in folds:
       v=int(v)
       v2= v*2
@@ -53,13 +54,13 @@ def first_star():
                y[idx] = int(y[idx]) | int(y[v2-idx])
                y.pop(-1)
             y.pop(-1)
-                 
+      break           
    tot = 0
    for r in grid:
       tot+=sum(r)
-   print(tot)    
+   
    print("Result First Star")
- 
+   print(tot)   
 
 def second_star():
    print("Result Second Star")
