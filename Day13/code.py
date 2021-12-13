@@ -7,7 +7,7 @@ def readinput():
    global input
    global grid
    global folds
-   input = readinput_lines("Day13\input_ex.txt")
+   input = readinput_lines("Day13\input.txt")
    dots = {}
    folds = []
    maxx = 0
@@ -34,7 +34,7 @@ def main():
    second_star()        
 
 def first_star():
-  
+   global grid
    for xy,v in folds:
       v=int(v)
       if xy.strip() == 'y':
@@ -42,14 +42,25 @@ def first_star():
          f1 = grid[:v+1]
          f2 = grid[v:]
          f2.reverse()
-         new_grid = [[0 for x in range(len(f1[0]))] for x in range(v+1)]
          for y,f in enumerate(f2):
             for i,c in enumerate(f):       
-               new_grid[y][i] = int(f1[y][i]) | c
+               f1[y][i] = int(f1[y][i]) | c
+         grid = f1
              
-             
-         print(new_grid)
-       
+      if xy.strip() == 'x':
+        
+         f1 =  [[x for x in y[:v]] for y in grid]
+         f2 =  [[x for x in y[v+1:]] for y in grid]
+         for y,f in enumerate(f2):
+            f.reverse()
+            for i,c in enumerate(f):       
+               f1[y][i] = int(f1[y][i]) | c
+        
+         grid = f1
+   tot = 0
+   for r in grid:
+      tot+=sum(r)
+   print(tot)    
    print("Result First Star")
  
 
