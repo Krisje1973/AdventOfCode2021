@@ -7,6 +7,8 @@ def readinput():
    global input
    global grid
    global folds
+   global maxx
+   global maxy
    input = readinput_lines("Day13\input.txt")
    dots = {}
    folds = []
@@ -35,28 +37,23 @@ def main():
 
 def first_star():
    global grid
+   #102 TO Low
    for xy,v in folds:
       v=int(v)
+      v2= v*2
       if xy.strip() == 'y':
-        
-         f1 = grid[:v+1]
-         f2 = grid[v:]
-         f2.reverse()
-         for y,f in enumerate(f2):
-            for i,c in enumerate(f):       
-               f1[y][i] = int(f1[y][i]) | c
-         grid = f1
+         for y in range(v):
+            for idx,x in enumerate(grid[y]):
+               grid[y][idx] = int(grid[y][idx]) | int(grid[v2-y][idx])
+         grid = grid[0:v+1]
              
       if xy.strip() == 'x':
-        
-         f1 =  [[x for x in y[:v]] for y in grid]
-         f2 =  [[x for x in y[v+1:]] for y in grid]
-         for y,f in enumerate(f2):
-            f.reverse()
-            for i,c in enumerate(f):       
-               f1[y][i] = int(f1[y][i]) | c
-        
-         grid = f1
+         for y in grid:
+            for idx in range(v):
+               y[idx] = int(y[idx]) | int(y[v2-idx])
+               y.pop(-1)
+            y.pop(-1)
+                 
    tot = 0
    for r in grid:
       tot+=sum(r)
