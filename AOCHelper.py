@@ -410,7 +410,7 @@ class GridHelper:
            adj.append((nx, ny))
     return adj
     
-  def get_adjacent_pos(x, y,maxx,maxy):
+  def get_adjacent_pos(self,x, y,maxx,maxy):
      for nx, ny in (x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1):
         if 0 <= nx < maxy and 0 <= ny < maxx:
             yield (nx, ny)
