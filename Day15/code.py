@@ -1,6 +1,6 @@
 import math
 import os, sys
-import heapq
+import heapq as heap
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from  AOCHelper import * 
 input = []
@@ -14,18 +14,24 @@ def readinput():
    global maxy
 
    input = readinput_lines("Day15\input.txt")
-   maxy=len(input)
-   maxx=len(input[0])
    for line in input:
       num = []
       for i in line:
          num.append(int(i))
       nums.append(num)
    
+   grid = []
+   for add in range(5):
+      for row in nums:
+         grid.append([(val + add - 1) % 9 + 1 for val in row])
+   nums = grid
+
+   maxy=len(nums) - 1
+   maxx=len(nums[0]) - 1
 def main():
    readinput()
-   first_star()
-   #second_star()        
+   #first_star()
+   second_star()        
 
 def first_star():
    gh = GridHelper()
@@ -43,17 +49,63 @@ def first_star():
             init_graph[(x,y)][a] = nums[a[0]][a[1]]
         
    graph = Graph(nodes, init_graph)
-   previous_nodes, shortest_path = dijkstra_algorithm(graph=graph, start_node=(0,0))
+   previous_nodes, shortest_path = dijkstra(graph=graph, start_node=(0,0))
    tot=0
    for path in print_result(previous_nodes, shortest_path, start_node=(0,0), target_node=(maxx-1,maxy-1)):
       tot+=nums[path[0]][path[1]]
    print("Result First Star")
    print(tot - nums[0][0])
 
+
+
+def dijkstra(G, startingNode):
+	visited = set()
+	parentsMap = {}
+	pq = []
+	nodeCosts = defaultdict(lambda: float('inf'))
+	nodeCosts[startingNode] = 0
+	heap.heappush(pq, (0, startingNode))
+ 
+	while pq:
+		# go greedily by always extending the shorter cost nodes first
+		_, node = heap.heappop(pq)
+		visited.add(node)
+ 
+		for adjNode, weight in G[node].items():
+			if adjNode in visited:	continue
+				
+			newCost = nodeCosts[node] + weight
+			if nodeCosts[adjNode] > newCost:
+				parentsMap[adjNode] = node
+				nodeCosts[adjNode] = newCost
+				heap.heappush(pq, (newCost, adjNode))
+        
+	return parentsMap, nodeCosts
 def second_star():
    #https://www.udacity.com/blog/2021/10/implementing-dijkstras-algorithm-in-python.html
-   print("Result Second Star")
+   gh = GridHelper()
+   nodes = []
+   init_graph = defaultdict()
+   for y in range(maxy+1):
+      for x in range(maxx+1):
+         nodes.append((x,y))
+   for node in nodes:
+      init_graph[node] = {}
 
+   for y in range(maxy):
+      for x in range(maxx):
+         for a in gh.get_adjacent_pos(x,y,maxx,maxy):
+            init_graph[(x,y)][a] = nums[a[0]][a[1]]
+        
+   graph = Graph(nodes, init_graph)
+   previous_nodes, shortest_path = dijkstra_algorithm(graph=graph, start_node=(0,0))
+   tot=0
+   for path in print_result(previous_nodes, shortest_path, start_node=(0,0), target_node=(maxx-1,maxy-1)):
+      tot+=nums[path[0]][path[1]]
+   print("Result Second Star")
+   print(tot - nums[0][0])
+
+   
 def print_result(previous_nodes, shortest_path, start_node, target_node):
     path = []
     node = target_node
@@ -106,6 +158,7 @@ class Graph(object):
     def value(self, node1, node2):
         "Returns the value of an edge between two nodes."
         return self.graph[node1][node2]
+
 def dijkstra_algorithm(graph, start_node):
     unvisited_nodes = list(graph.get_nodes())
  
