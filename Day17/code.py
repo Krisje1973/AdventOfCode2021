@@ -15,7 +15,7 @@ def main():
    second_star()        
 
 def first_star():
-   best, total = 0
+   best, total = 0,0
    for y in range(-200, 200):
       for x in range(0, 200):
          pos = [0, 0]
