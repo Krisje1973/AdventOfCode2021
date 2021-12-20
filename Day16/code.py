@@ -9,7 +9,7 @@ literals = []
 def readinput():
    global input
    input = readinput_lines("Day16\input.txt")[0]
-   input = "8A004A801A8002F478"
+   input = "620080001611562C8802118E34"
    input =  bin(int(input, 16))[2:]
    print(len(input)%4)
    
@@ -22,53 +22,41 @@ def first_star():
    s=0
    v=defaultdict(int)
    l=[]
-   while s < len(input)-5:
-      s,v,l = decode(input,s)
+   decode(input)
    print("Result First Star")
-   print(s,v,l)
+   print(versions)
 
-def decode(bits,start):
+def decode(bits):
    global versions
    global literals
-   if len(bits) < 6 : return
-   versions.append(int(bits[start:start+3], 2))
-   start+=3
-   type = int(bits[start:start+3], 2)
-   start+=3
-   if type == 4:
-      lit = ''
-      while True:
-         e = int(bits[start:start+1], 2)
-         lit += bits[start:start+5]
-         start += 5
-         if not e :break
-   else:
-      l = (15,11)
-      versions.append(int(bits[start:start+1],2))
-      ns = l[versions[-1]]
-      start+=1
-      sp = int(bits[start:start+ns], 2)
-      start+=ns
-      if ns == 15:
-         for i  in range(sp//11):           
-            decode(bits[start+(11*i):start+(11*i)+11],0)
-         start+=sp
-         
+   while len(bits) > 5:
+      versions.append(int(bits[:3], 2))
+      bits=bits[3:]
+      type = int(bits[:3], 2)
+      bits=bits[3:]
+      if type == 4:
+         lit = ''
+         while True:
+            e = int(bits[:1], 2)
+            lit += bits[:5]
+            bits=bits[5:]
+            if not e :break
       else:
-         for i in range(sp):
-            decode(bits[start+(11*i):start+(11*i)+11],0)
-         start+=sp
-         
-   return start
-
-
-            
-
-
-
-
-         
-   
+         l = (15,11)
+       
+         ns = l[int(bits[:1],2)]
+         bits=bits[1:]
+         sp = int(bits[1:ns], 2)
+         bits=bits[ns:]
+         if ns == 15:
+            for i in range(sp//11):           
+               decode(bits[:11])
+               bits=bits[11:]
+         else:
+            for i in range(sp):
+               decode(bits[:11])
+               bits=bits[11:]
+               
 def second_star():
    print("Result Second Star")
   

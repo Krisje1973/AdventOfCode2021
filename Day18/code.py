@@ -24,40 +24,32 @@ def first_star():
  
 def explode(exp):
    rh = RegexHelper()
-   li = exp.split('[')[:6]
-   cn = Counter(li)[']']
-   lr = exp.split(']')[1:6]
+   open = []
+   p = 0
+   sb = ''
+   
+   for c in exp:
+      if c == '[':  open.append(p+1)
+      p+=1
+      sb+=c
+      if len(open) == 5: break
+      
+   if len(open) == 5:
+      xy = rh.extract_numerics(exp[open[-1]:open[-1]+3])
+      if len(xy) == 2:
+         x,y = xy
+         while open:
+            open.pop(-1)
+            xy = rh.extract_numerics(exp[open[-1]:open[-1]+3])
+            if len(xy) == 0: continue
+            if len(xy) == 1:
+               sb = sb[:-2] + '[' + str(xy[0]+x) + ',0]'
+               break
+            if len(xy) == 2:
+               sb = sb[:-2] + '[' + str(xy[0]+x) + ',' + str(y) +']'
+               break
+      else : return
   
-   if len(li) > 4:
-      
-      x,y = map(intify, li[5].split(']')[0].split(','))
-     
-      
-      for i in range(4,-1,-1):  
-         if li[i] == '': continue      
-         xb,yb = map(intify,li[i].split(']')[0].split(','))
-         if xb > 0 :
-            li[i] = str(xb+x) + ',' + str(yb) 
-            break
-
-      for r in range(len(lr)):
-         if lr[r] == '' : continue
-         if rh.has_string_numeric_regex(lr[r]):
-            lr[r] = '[' + str(int(lr[r][1])+y)
-            break
-     
-      s=' '
-      for l in li[1:5]:
-         s+= '[' + l
-      for r in lr:
-         s+= r + ','
-      print(exp)
-      exp = s.strip()
-      print('         '+ exp)
-      print('expected [[3,[2,[8,0]]],[9,[5,[4,[3,2]]]]]')
-      exp += explode(exp)
-      
-
 
    
   

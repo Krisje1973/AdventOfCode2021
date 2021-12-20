@@ -506,26 +506,30 @@ class ChineseReminder():
       return gcd, x, y  # x, y are for [ax + by = gcd]
 
 class RegexHelper():
-  def is_string_numeric_regex(self,s):
-    return re.search('^[0-9]+$',s)
-  
-  def is_list_numeric_regex(self,l):
-    for s in l:
-      if not re.search('^[0-9]+$',s):
+
+    def extract_numerics(self,line):
+        return list(map(int, re.findall(r"-?\d+", line)))
+        
+    def is_string_numeric_regex(self,s):
+        return re.search('^[0-9]+$',s)
+
+    def is_list_numeric_regex(self,l):
+        for s in l:
+            if not re.search('^[0-9]+$',s):
+                return False
+
+        return True
+
+    def has_string_numeric_regex(self, s):
+        for i in s:
+            if re.search('^[0-9]+$',i):
+                return True
+
         return False
 
-    return True
-  
-  def has_string_numeric_regex(self, s):
-    for i in s:
-        if re.search('^[0-9]+$',i):
-          return True
-
-    return False
-    
-  def has_list_numeric_regex(self,l):
-    for s in l:
-      if re.search('^[0-9]+$',s):
-        return True
-        
-    return False
+    def has_list_numeric_regex(self,l):
+        for s in l:
+            if re.search('^[0-9]+$',s):
+                return True
+            
+        return False
