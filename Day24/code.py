@@ -12,12 +12,12 @@ def readinput():
   
    
 def first_star():
-  
+   
    print("Result First Star")
-   #5867 to high :(
    print()
 
 def second_star():
+   
    print("Result Second Star")
 
 def main():
