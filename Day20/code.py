@@ -51,6 +51,7 @@ def second_star():
 
    rolls = [sum(p) for p in product([1, 2, 3], repeat=3)]
    
+
    universes = Counter([(p1, p2, 0, 0)])
    while not all(s1 >= 21 or s2 >= 21 for p1, p2, s1, s2 in universes):
       next_universes = Counter()
