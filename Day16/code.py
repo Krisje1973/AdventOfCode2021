@@ -35,7 +35,7 @@ class Package():
       self.mode = 1
       self.sub_length = 11
    
-   def isLiteral(self) -> bool:
+   def IsLiteral(self) -> bool:
       return self.type==self.literal_type
    
    def VersionTotal(self) -> int:
@@ -84,7 +84,7 @@ def unpack():
          break
 
       pack = Package(v,t)
-      if pack.isLiteral():
+      if pack.IsLiteral():
          decode_literal(pack)
       else:
          decode_operator(pack)
@@ -105,7 +105,7 @@ def decode_operator(pack:Package):
       s=re.getindex()
       while re.getindex() < s+pack.sub_length:
          sub = Package(re.read(3),re.read(3))
-         if sub.isLiteral(): 
+         if sub.IsLiteral(): 
             decode_literal(sub)
          else:
             decode_operator(sub)
@@ -114,7 +114,7 @@ def decode_operator(pack:Package):
       pack.sub_length = int(re.read(11),2)
       for i in range(pack.sub_length):
          sub = Package(re.read(3),re.read(3))
-         if sub.isLiteral(): 
+         if sub.IsLiteral(): 
             decode_literal(sub)
          else:
             decode_operator(sub)
