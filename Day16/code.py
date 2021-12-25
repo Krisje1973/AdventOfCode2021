@@ -3,9 +3,6 @@ import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from  AOCHelper import * 
 input = []
-pos = 0
-versions = []
-literals = []
 re = IndexedReader('')
 def readinput():
    global input
@@ -26,8 +23,6 @@ def first_star():
 def second_star():
    print("Result First Star")
    print(unpack()[0].Calculate())
-
-
 
 class Package():
    def __init__(self,v:int,t:int):
@@ -78,7 +73,6 @@ class Package():
       else:
             print(f"Unknown packet type: {self.type}")
             a = input()
-
 
 def unpack():
    global re
