@@ -22,7 +22,13 @@ def main():
 def first_star():
    print("Result First Star")
    print(unpack()[0].VersionTotal())
-   
+
+def second_star():
+   print("Result First Star")
+   print(unpack()[0].Calculate())
+
+
+
 class Package():
    def __init__(self,v:int,t:int):
       self.type = int(t,2)
@@ -39,6 +45,39 @@ class Package():
    
    def VersionTotal(self) -> int:
       return sum([c.VersionTotal() for c in self.children]) + self.version
+   
+   def Calculate(self) -> int:
+      for c in self.children:
+         c.Calculate()
+      if self.type == 0:  # Sum
+            self.evaluated_value = sum([c.evaluated_value for c in self.children])
+            return self.evaluated_value
+      elif self.type == 1:  # Product
+            self.evaluated_value = 1
+            for c in self.children:
+               self.evaluated_value *= c.evaluated_value
+            return self.evaluated_value
+      elif self.type == 2:  # Minimum
+            self.evaluated_value = min([c.evaluated_value for c in self.children])
+            return self.evaluated_value
+      elif self.type == 3:  # Maximum
+            self.evaluated_value = max([c.evaluated_value for c in self.children])
+            return self.evaluated_value
+      elif self.type == 4:  # Literal
+            self.evaluated_value =  int(self.literal,2)
+            return self.evaluated_value
+      elif self.type == 5:  # Greater Than
+            self.evaluated_value = 1 if self.children[0].evaluated_value > self.children[1].evaluated_value else 0
+            return self.evaluated_value
+      elif self.type == 6:  # Less Than
+            self.evaluated_value = 1 if self.children[0].evaluated_value < self.children[1].evaluated_value else 0
+            return self.evaluated_value
+      elif self.type == 7:  # Equal To
+            self.evaluated_value = 1 if self.children[0].evaluated_value == self.children[1].evaluated_value else 0
+            return self.evaluated_value
+      else:
+            print(f"Unknown packet type: {self.type}")
+            a = input()
 
 
 def unpack():
@@ -87,15 +126,6 @@ def decode_operator(pack:Package):
             decode_operator(sub)
          pack.children.append(sub)
 
-
-
-
-
-
-
-  
-
-
 def decode(bits):
    global versions
    global literals
@@ -132,10 +162,6 @@ def decode(bits):
                b= bits[11:11*i+1]
                bits=bits[11:]
                decode(b)
-               
-               
-def second_star():
-   print("Result Second Star")
   
 if __name__ == '__main__':
     main()
