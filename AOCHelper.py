@@ -533,3 +533,16 @@ class RegexHelper():
                 return True
             
         return False
+
+class IndexedReader():
+    def __init__(self,input:str,start:int=0):
+      self.input = input
+      self.index = start
+    def read(self,chars:int) ->str:
+        self.index+=chars
+        return self.input[self.index-chars:self.index]
+    def eof(self)->bool:
+        return self.index>=len(self.input)-1
+    def getindex(self):
+        return self.index
+
