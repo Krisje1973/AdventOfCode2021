@@ -511,7 +511,7 @@ class RegexHelper():
         return list(map(int, re.findall(r"-?\d+", line)))
         
     def is_string_numeric_regex(self,s):
-        return re.search('^[0-9]+$',s)
+        return re.search('^[-+]?[0-9]+$',s)
 
     def is_list_numeric_regex(self,l):
         for s in l:

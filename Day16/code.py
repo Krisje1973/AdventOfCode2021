@@ -10,6 +10,7 @@ def readinput():
    global input
    input = readinput_lines("Day16\input.txt")[0]
    input = "620080001611562C8802118E34"
+   input = "8A004A801A8002F478"
    input =  bin(int(input, 16))[2:]
    print(len(input)%4)
    
@@ -29,33 +30,40 @@ def first_star():
 def decode(bits):
    global versions
    global literals
+
    while len(bits) > 5:
       versions.append(int(bits[:3], 2))
       bits=bits[3:]
       type = int(bits[:3], 2)
       bits=bits[3:]
       if type == 4:
+         #prefix 1, then 4 digits, last = prefix 0
          lit = ''
          while True:
             e = int(bits[:1], 2)
-            lit += bits[:5]
+            lit += bits[1:5]
             bits=bits[5:]
-            if not e :break
+            if not e :
+               literals.append(lit)
+               break
       else:
          l = (15,11)
        
          ns = l[int(bits[:1],2)]
-         bits=bits[1:]
-         sp = int(bits[1:ns], 2)
-         bits=bits[ns:]
+        
+         sp = bits[1:ns+1]
+         sp = int(sp, 2)
+         bits=bits[ns+1:]
          if ns == 15:
             for i in range(sp//11):           
                decode(bits[:11])
-               bits=bits[11:]
+            bits=bits[sp:]
          else:
             for i in range(sp):
-               decode(bits[:11])
+               b= bits[11:11*i+1]
                bits=bits[11:]
+               decode(b)
+               
                
 def second_star():
    print("Result Second Star")
